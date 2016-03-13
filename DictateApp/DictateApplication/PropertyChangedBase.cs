@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DictateApplication
 {
-    class PropertyChangedBase
+    public class PropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

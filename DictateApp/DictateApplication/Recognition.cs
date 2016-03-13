@@ -9,20 +9,31 @@ using System.Threading.Tasks;
 
 namespace DictateApplication
 {
-    internal class Recognition : PropertyChangedBase
+    public class Recognition : PropertyChangedBase
     {
         private MicrophoneRecognitionClient _micClient;
         string _recoLanguage = "en-us";
+
+        public Recognition()
+        {
+            _recognitions = new ObservableCollection<RecognitionResult>();
+            _recognitions.CollectionChanged += (s, e) => NotifyPropertyChanged(nameof(Results));
+        }
 
         public List<string> Results
         {
             get
             {
-                List<string> results;
-                if (_desiredQuality == 1)
-                    results = Recognitions.Select(n => n.Results.OrderByDescending(r => r.Confidence).FirstOrDefault().DisplayText).ToList();
-                else
-                    results = Recognitions.Select(n => n.Results.OrderBy(r => r.Confidence).FirstOrDefault().DisplayText).ToList();
+                List<string> results = Recognitions.Select(n =>
+                {
+                    RecognizedPhrase x;
+                    if (_desiredQuality == 1)
+                        x = n.Results.OrderByDescending(r => r.Confidence).FirstOrDefault();
+                    else
+                        x = n.Results.OrderBy(r => r.Confidence).FirstOrDefault();
+
+                    return x.DisplayText + n.RecognitionStatus.ToString();
+                }).ToList();
 
                 results.Add(CurrentRecognition);
                 return results;
@@ -41,13 +52,14 @@ namespace DictateApplication
                 if (_currentRecognition != value)
                 {
                     _currentRecognition = value;
+                    NotifyPropertyChanged(nameof(CurrentRecognition));
                     NotifyPropertyChanged(nameof(Results));
                 }
             }
         }
 
-        private List<RecognitionResult> _recognitions;
-        public List<RecognitionResult> Recognitions
+        private ObservableCollection<RecognitionResult> _recognitions;
+        public ObservableCollection<RecognitionResult> Recognitions
         {
             get
             {
@@ -117,8 +129,11 @@ namespace DictateApplication
 
         private void OnMicDictationResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
-            if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.EndOfDictation ||
-    e.PhraseResponse.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout)
+            if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.EndOfDictation
+                || e.PhraseResponse.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout
+                || e.PhraseResponse.RecognitionStatus == RecognitionStatus.Intermediate
+                || e.PhraseResponse.RecognitionStatus == RecognitionStatus.RecognitionSuccess
+                || e.PhraseResponse.RecognitionStatus == RecognitionStatus.RecognitionError)
             {
                 CurrentRecognition = String.Empty;
                 _recognitions.Add(e.PhraseResponse);

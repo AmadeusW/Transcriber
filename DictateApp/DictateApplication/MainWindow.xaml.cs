@@ -21,26 +21,28 @@ namespace DictateApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        Recognition _recognition;
-
         public MainWindow()
         {
-            InitializeComponent();
-            _recognition = new Recognition();
+            Recognition _recognition = new Recognition();
             this.DataContext = _recognition;
+            InitializeComponent();
         }
-
+        
         private void Power_Checked(object sender, RoutedEventArgs e)
         {
+            var r = this.DataContext as Recognition;
+            progress.Visibility = Power.IsChecked.Value ? Visibility.Visible : Visibility.Hidden;
+
             if (Power.IsChecked.Value)
-                _recognition.Start();
+                r.Start();
             else
-                _recognition.Stop();
+                r.Stop();
         }
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _recognition.DesiredQuality = (int)slider.Value - 3; // translate [0..4] into [-2..1]
+            var r = this.DataContext as Recognition;
+            r.DesiredQuality = (int)slider.Value; // translate [0..4] into [-2..1]
         }
     }
 }
