@@ -1,0 +1,32 @@
+﻿<Window x:Class="DictateApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DictateApplication"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" HorizontalAlignment="Stretch"/>
+
+        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Power" />
+
+        <DockPanel Grid.Row="1" Grid.Column="1" >
+            <TextBlock Text="Quality" DockPanel.Dock="Left"/>
+            <Slider x:Name="slider" DockPanel.Dock="Top" HorizontalAlignment="Right" Maximum="4" Minimum="0" LargeChange="1" TickFrequency="1" Value="4" VerticalAlignment="Top" />
+        </DockPanel>
+
+        <ListView Grid.Row="2"  Grid.ColumnSpan="2" x:Name="listView" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+    </Grid>
+</Window>

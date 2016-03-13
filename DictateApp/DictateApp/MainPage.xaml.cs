@@ -26,5 +26,21 @@ namespace DictateApp
         {
             this.InitializeComponent();
         }
+
+        private void Power_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (Power.IsOn)
+            {
+                // Start operation
+                Recognition.Start();
+            }
+            else
+            {
+                // Stop operation
+                Recognition.Stop();
+            }
+        }
+
+
     }
 }
