@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="Recognition.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>

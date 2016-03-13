@@ -61,7 +61,7 @@ namespace DictateApplication {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 7d8c21364c594bebaf2801aa96c7214a.
         /// </summary>
         internal static string SpeechAPIKey {
             get {

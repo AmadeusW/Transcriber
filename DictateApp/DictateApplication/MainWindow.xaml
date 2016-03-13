@@ -8,8 +8,8 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,14 +19,14 @@
 
         <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" IsIndeterminate="True" HorizontalAlignment="Stretch"/>
 
-        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Power" />
+        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Power" Checked="Power_Checked" />
 
         <DockPanel Grid.Row="1" Grid.Column="1" >
             <TextBlock Text="Quality" DockPanel.Dock="Left"/>
-            <Slider x:Name="slider" DockPanel.Dock="Top" HorizontalAlignment="Right" Maximum="4" Minimum="0" LargeChange="1" TickFrequency="1" Value="4" VerticalAlignment="Top" />
+            <Slider x:Name="slider" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Maximum="4" Minimum="0" LargeChange="1" TickFrequency="1" Value="4" VerticalAlignment="Top" ValueChanged="slider_ValueChanged" />
         </DockPanel>
 
-        <ListView Grid.Row="2"  Grid.ColumnSpan="2" x:Name="listView" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <ListView ItemsSource="{Binding Path=Results}" Grid.Row="2" Grid.ColumnSpan="2" x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
     </Grid>
 </Window>
