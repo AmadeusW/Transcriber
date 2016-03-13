@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
+    <PRIResource Include="Settings.resw" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
