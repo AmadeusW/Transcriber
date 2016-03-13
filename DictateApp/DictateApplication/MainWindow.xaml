@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictateApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Closing="Window_Closing">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -17,11 +17,11 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <CheckBox Grid.Row="0" Grid.Column="0" x:Name="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Power" Checked="Power_Checked" />
+        <CheckBox Grid.Row="0" Grid.Column="0" x:Name="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Power" Checked="powerChangedEvent" Unchecked="powerChangedEvent" />
 
         <DockPanel Grid.Row="0" Grid.Column="1" >
             <TextBlock Text="Quality" DockPanel.Dock="Left" Margin="0 0 10 0"/>
-            <Slider x:Name="slider" DockPanel.Dock="Top" Maximum="1" Minimum="-2" ValueChanged="slider_ValueChanged"/>
+            <Slider x:Name="slider" DockPanel.Dock="Top" Maximum="1" Minimum="-2" ValueChanged="sliderValueChanged"/>
         </DockPanel>
 
         <ProgressBar x:Name="progress" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" IsIndeterminate="True" Visibility="Hidden"/>

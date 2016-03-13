@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DictateApplication
 {
-    public class Recognition : PropertyChangedBase
+    public class Recognition : PropertyChangedBase, IDisposable
     {
         private MicrophoneRecognitionClient _micClient;
         string _recoLanguage = "en-us";
@@ -31,8 +31,7 @@ namespace DictateApplication
                         x = n.Results.OrderByDescending(r => r.Confidence).FirstOrDefault();
                     else
                         x = n.Results.OrderBy(r => r.Confidence).FirstOrDefault();
-
-                    return x.DisplayText + n.RecognitionStatus.ToString();
+                    return $"{x?.DisplayText} ({x?.Confidence} {n?.RecognitionStatus.ToString()})";
                 }).ToList();
 
                 results.Add(CurrentRecognition);
@@ -143,6 +142,15 @@ namespace DictateApplication
         private void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
         {
             CurrentRecognition = e.PartialResult;
+        }
+
+        public void Dispose()
+        {
+            if (_micClient != null)
+            {
+                _micClient.EndMicAndRecognition();
+                _micClient.Dispose();
+            }
         }
     }
 }

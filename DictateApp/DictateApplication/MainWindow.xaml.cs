@@ -21,28 +21,33 @@ namespace DictateApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        Recognition _recognition;
+
         public MainWindow()
         {
-            Recognition _recognition = new Recognition();
+            _recognition = new Recognition();
             this.DataContext = _recognition;
             InitializeComponent();
         }
         
-        private void Power_Checked(object sender, RoutedEventArgs e)
+        private void powerChangedEvent(object sender, RoutedEventArgs e)
         {
-            var r = this.DataContext as Recognition;
-            progress.Visibility = Power.IsChecked.Value ? Visibility.Visible : Visibility.Hidden;
+            progress.Visibility = Power.IsChecked.Value == true ? Visibility.Visible : Visibility.Hidden;
 
             if (Power.IsChecked.Value)
-                r.Start();
+                _recognition.Start();
             else
-                r.Stop();
+                _recognition.Stop();
         }
 
-        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var r = this.DataContext as Recognition;
-            r.DesiredQuality = (int)slider.Value; // translate [0..4] into [-2..1]
+            _recognition.DesiredQuality = (int)slider.Value;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _recognition.Dispose();
         }
     }
 }
