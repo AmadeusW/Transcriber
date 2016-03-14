@@ -96,7 +96,7 @@ namespace DictateApplication
             if (_micClient == null)
             {
                 var key = Resources.ResourceManager.GetString("SpeechAPIKey");
-                _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.LongDictation, _recoLanguage, key);
+                _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.ShortPhrase, _recoLanguage, key);
             }
             _micClient.StartMicAndRecognition();
         }
@@ -136,6 +136,9 @@ namespace DictateApplication
             {
                 CurrentRecognition = String.Empty;
                 _recognitions.Add(e.PhraseResponse);
+
+                // Don't stop.
+                _micClient.StartMicAndRecognition();
             }
         }
 
